@@ -15,14 +15,17 @@ const Login = () => {
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
+
+//--------------- SUCCESS/ERROR MESSAGES ---------------
+
   const error = () => {
     message.error("Wrong Credentials, Please try again!");
   };
   const success = () => {
-    message.success("Login Succes");
+    message.success("Loggedin Successfully, Happy reading!");
   };
 
-  //---------------LOGIN FORM SUBMIT HANDLER---------------
+  //-------------- LOGIN FORM SUBMIT HANDLER ------------
 
   const onSubmit = (e) => {
     let userData = localStorage.getItem("users");
