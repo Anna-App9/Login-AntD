@@ -12,7 +12,7 @@ const Register = () => {
   const navigate = useNavigate();
  
 
-  const onChangename = (e) => {
+  const onChangeName = (e) => {
     setUsername(e.target.value);
   };
   const onChangeEmail = (e) => {
@@ -32,7 +32,7 @@ const Register = () => {
     message.success('Congrats, your registration is successful. Please login now!');
   };
 
-  //---------------FORM SUBMIT HANDLER---------------
+  //---------------REGISTRATION FORM SUBMIT HANDLER---------------
 
   const onSubmit = (e) => {
     let newData = {
@@ -55,7 +55,6 @@ const Register = () => {
       })
       success();
       navigate('/login');
-      
     }
   };
 
@@ -73,7 +72,6 @@ const Register = () => {
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 5 }}
         onFinish={onSubmit}
-        // onSubmit={onSubmit}
         onFinishFailed={(error) => {
           console.log({ error });
         }}
@@ -83,7 +81,7 @@ const Register = () => {
           label="Username"
           name="username"
           value={username}
-          onChange={onChangename}
+          onChange={onChangeName}
           rules={[
             {
               required: true,
