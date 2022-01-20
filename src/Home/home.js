@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Menu, message, Card, Col, Row, Pagination } from "antd";
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from "@ant-design/icons";
+import { Layout, Menu, message, Card, Col, Row } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
