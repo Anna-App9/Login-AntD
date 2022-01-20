@@ -1,44 +1,63 @@
-import React, {useState} from "react";
-import { Form, Input, Button } from "antd";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Form, Input, Button, message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const Register = () => {
-
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [mobile, setMobile] = useState();
-  const [cpassword, setCpassword]= useState();
+  const [cpassword, setCpassword] = useState();
+  const navigate = useNavigate();
+ 
 
-  const onChangename=(e)=>{
+  const onChangename = (e) => {
     setUsername(e.target.value);
-  }
-  const onChangeEmail=(e)=>{
-    setEmail(e.target.value)
-  }
-  const onChangeMobile=(e)=>{
-    setMobile(e.target.value)
-  }
-  const onChangePassword=(e)=>{
-    setPassword(e.target.value)
-  }
-  const onChangeCpassword=(e)=>{
-    setCpassword(e.target.value)
-  }
+  };
+  const onChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
+  const onChangeMobile = (e) => {
+    setMobile(e.target.value);
+  };
+  const onChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
+  const onChangeCpassword = (e) => {
+    setCpassword(e.target.value);
+  };
 
-  const onSubmit =(e)=>{
+  const success = () => {
+    message.success('Congrats, your registration is successful. Please login now!');
+  };
+
+  //---------------FORM SUBMIT HANDLER---------------
+
+  const onSubmit = (e) => {
     let newData = {
-      username:setUsername,
-      mobile:setMobile
-    }
+      username: e.username,
+      email: e.email,
+      mobile: e.mobile,
+      password: e.password,
+      cpassword: e.cpassword,
+    };
     console.log(newData);
-    let userData = localStorage.getItem('users');
-    if(!userData){
-      localStorage.setItem('users', JSON.stringify(newData));
+    let newUser = localStorage.getItem('users');
+    if (!newUser) {
+      localStorage.setItem('users', JSON.stringify([newData]));
     }
-
-  }
-  
+    else{
+      let userArr = JSON.parse(newUser);
+      userArr.map(arr=>{
+        userArr.push(newData);
+        localStorage.setItem('users', JSON.stringify(userArr));  
+      })
+      success();
+      navigate('/login');
+      
+    }
+  };
 
   return (
     <div style={{ textAlign: "center" }} className="reg">
@@ -53,8 +72,6 @@ const Register = () => {
       <Form
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 5 }}
-        // onFinish={(values) => {
-        // console.log({ values });}}
         onFinish={onSubmit}
         // onSubmit={onSubmit}
         onFinishFailed={(error) => {
@@ -66,7 +83,7 @@ const Register = () => {
           label="Username"
           name="username"
           value={username}
-          onChange ={onChangename}
+          onChange={onChangename}
           rules={[
             {
               required: true,
@@ -105,12 +122,12 @@ const Register = () => {
               required: true,
               message: "Mobile number is required",
             },
-            ({getFieldValue}) => ({
+            ({ getFieldValue }) => ({
               validator(_, value) {
-                if (value.length !==10) {
+                if (value.length !== 10) {
                   return Promise.reject("Please enter valid Mobile No!");
                 }
-                return Promise.resolve()
+                return Promise.resolve();
               },
             }),
           ]}
